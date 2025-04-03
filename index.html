@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav>
+    <nav id="navbar">
         <header>Documentacion Phyton</header>
         <ul>
             <li><a class="link_nav" href="#Novedades">Novedades Phyton 3.14</a></li>
@@ -17,7 +17,7 @@
             <li><a class="link_nav" href="#Modulos_Mejorados">Modulos Mejorados</a></li>
             <li><a class="link_nav" href="#Optimizaciones">Optimizaciones</a></li>
             <li><a class="link_nav" href="#Obsoleto">Obsoleto</a></li>
-            <li><a class="link_nav" href="#Eliminado">#Eliminado</a></li>
+            <li><a class="link_nav" href="#Eliminado">Eliminado</a></li>
         </ul>
     </nav>
     <main id="main-doc">
@@ -26,9 +26,7 @@
             <article>
                 <p>Este artículo explica las nuevas características de Python 3.14, en comparación con 3.13.</p>
                 <p>Para obtener detalles completos, consulte el registro de cambios .</p>
-                <code>Los usuarios de versiones preliminares deben tener en cuenta que este documento se encuentra 
-                    actualmente en borrador. Se actualizará considerablemente a medida que se acerque el lanzamiento 
-                    de Python 3.14, por lo que conviene consultarlo incluso después de leer versiones anteriores.</code>
+                <code>Los usuarios de versiones preliminares deben tener en cuenta que este documento se encuentra actualmente en borrador. Se actualizará considerablemente a medida que se acerque el lanzamiento de Python 3.14, por lo que conviene consultarlo incluso después de leer versiones anteriores.</code>
             </article>
         </section>
         <section class="main-section" id="Funciones_Nuevas">
@@ -43,29 +41,26 @@
                     real sin detenerlas ni reiniciarlas, una capacidad crucial para sistemas de alta disponibilidad 
                     y entornos de producción.</p>
                 <p>Para mayor comodidad, CPython implementa esta interfaz a través del sysmódulo con una sys.remote_exec()función:</p>
-                <code>
-                    sys.remote_exec(pid, script_path)
-                </code>
+                <code>sys.remote_exec(pid, script_path)</code>
                 <p>Esta función permite enviar código Python para su ejecución en un proceso de destino en el siguiente 
                     punto de ejecución seguro. Sin embargo, los creadores de herramientas también pueden implementar 
                     el protocolo directamente, como se describe en el PEP, que detalla los mecanismos subyacentes 
                     utilizados para conectarse de forma segura a los procesos en ejecución.</p>
                 <p>A continuación se muestra un ejemplo simple que inspecciona los tipos de objetos en un proceso de Python en ejecución:</p>
-                <code>
-                    import os
-                    import sys
-                    import tempfile
+                <code>import os
+import sys
+import tempfile
 
-                    # Create a temporary script
-                    with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
-                        script_path = f.name
-                        f.write(f"import my_debugger; my_debugger.connect({os.getpid()})")
-                    try:
-                        # Execute in process with PID 1234
-                        print("Behold! An offering:")
-                        sys.remote_exec(1234, script_path)
-                    finally:
-                        os.unlink(script_path)
+# Create a temporary script
+with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+    script_path = f.name
+    f.write(f"import my_debugger; my_debugger.connect({os.getpid()})")
+try:
+    # Execute in process with PID 1234
+    print("Behold! An offering:")
+    sys.remote_exec(1234, script_path)
+finally:
+    os.unlink(script_path)
                 </code>
                 <p>La interfaz de depuración ha sido cuidadosamente diseñada teniendo en cuenta la seguridad e incluye varios mecanismos para controlar el acceso:</p>
                 <ul>
@@ -89,8 +84,7 @@
                         la -O opción de línea de comandos. Por ejemplo, ahora produce un . (Contribuido por Jelle Zijlstra en gh-121637 )
                         .<code>python -O -c 'assert await 1'</code>SyntaxError</li>
                     <li>Ahora se detectan las escrituras en <code>__debug__</code>incluso si el código se optimiza mediante la -Oopción de línea de 
-                        comandos. Por ejemplo, ahora produce un . (Contribuido por Irit Katriel en gh-122245 ).<code>python -O -c 'assert 
-                        (__debug__ := 1)'</code>SyntaxError</li>
+                        comandos. Por ejemplo, ahora produce un . (Contribuido por Irit Katriel en gh-122245 ).<code>python -O -c 'assert (__debug__ := 1)'</code>SyntaxError</li>
                 </ul>
             </article>
         </section>
@@ -192,13 +186,12 @@
                                 </ul>
                             <p>Los usuarios deben usar asyncio.run()o asyncio.Runnercon loop_factory para utilizar la implementación del bucle de eventos deseada.</p>
                             <p>Por ejemplo, para usar asyncio.SelectorEventLoopen Windows:</p>
-                            <code>
-                                import asyncio
+                            <code class="exep">import asyncio
 
-                                async def main():
-                                    ...
+async def main():
+    ...
 
-                                asyncio.run(main(), loop_factory=asyncio.SelectorEventLoop)
+asyncio.run(main(), loop_factory=asyncio.SelectorEventLoop)
                             </code>
                             <p>(Contribuido por Kumar Aditya en gh-127949 ).</p>
                             </li>

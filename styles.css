@@ -1,0 +1,60 @@
+html,body{
+    color: #4d4e53;
+    background-color: #ffffff;
+    font-family: 'Open Sans', Arial, sans-serif;
+    line-height: 1.5;
+}
+
+#navbar{
+    position: fixed;
+    min-width: 290px;
+    width: 300px;
+    left: 0;
+    border-right: solid;
+    border-color: rgba(0, 0, 0, 0.3); 
+    height: 100%;
+    top: 0;
+}
+
+#main-doc{
+    position: absolute;
+    margin-left: 310px;
+}
+
+header{
+    text-align: center;
+    color: black;
+    font-size: 1.8em;
+    margin: 10px;
+}
+
+#main-doc header{
+    text-align: left;
+}
+
+code {
+    display: block;
+    text-align: left;
+    white-space: pre-wrap; 
+    position: relative;
+    line-height: 1.5;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: auto; /* Permite desplazamiento horizontal si el código es largo */
+    border: 1px solid #3c3c3c; /* Bordes sutiles */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Efecto de sombra */
+}
+
+li code:not(.exep){
+    display: inline; /* Mantiene el flujo en la misma línea */
+    padding: 2px 5px; /* Reduce el padding para que se vea bien en línea */
+    border-radius: 3px; /* Bordes más sutiles */
+    font-size: 0.95rem; /* Un poco más pequeño para mejor integración */
+    background-color: #1e1e1e; /* Mantiene el fondo oscuro */
+    color: #d4d4d4;
+}
