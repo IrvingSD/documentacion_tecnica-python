@@ -4,8 +4,215 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentacion Python</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav>
+        <header>Documentacion Phyton</header>
+        <ul>
+            <li><a class="link_nav" href="#Novedades">Novedades Phyton 3.14</a></li>
+            <li><a class="link_nav" href="#Funciones_Nuevas">Funciones Nuevas</a></li>
+            <li><a class="link_nav" href="#Cambios_en_Phyton">Cambios en Phyton</a></li>
+            <li><a class="link_nav" href="#Modulos_Nuevos">Modulos Nuevos</a></li>
+            <li><a class="link_nav" href="#Modulos_Mejorados">Modulos Mejorados</a></li>
+            <li><a class="link_nav" href="#Optimizaciones">Optimizaciones</a></li>
+            <li><a class="link_nav" href="#Obsoleto">Obsoleto</a></li>
+            <li><a class="link_nav" href="#Eliminado">#Eliminado</a></li>
+        </ul>
+    </nav>
+    <main id="main-doc">
+        <section class="main-section" id="Novedades">
+            <header>Novedades</header>
+            <article>
+                <p>Este artículo explica las nuevas características de Python 3.14, en comparación con 3.13.</p>
+                <p>Para obtener detalles completos, consulte el registro de cambios .</p>
+                <code>Los usuarios de versiones preliminares deben tener en cuenta que este documento se encuentra 
+                    actualmente en borrador. Se actualizará considerablemente a medida que se acerque el lanzamiento 
+                    de Python 3.14, por lo que conviene consultarlo incluso después de leer versiones anteriores.</code>
+            </article>
+        </section>
+        <section class="main-section" id="Funciones_Nuevas">
+            <header>Funciones Nuevas</header>
+            <article>
+                <p>PEP 768 introduce una interfaz de depuración sin sobrecarga que permite a los depuradores y 
+                    perfiladores conectarse de forma segura a procesos Python en ejecución. Esta mejora significativa 
+                    de las capacidades de depuración de Python permite a los depuradores evitar alternativas inseguras.</p>
+                <p>La nueva interfaz proporciona puntos de ejecución seguros para adjuntar código de depuración sin 
+                    modificar la ruta de ejecución normal del intérprete ni sobrecargar el tiempo de ejecución. 
+                    Esto permite que las herramientas inspeccionen e interactúen con aplicaciones Python en tiempo 
+                    real sin detenerlas ni reiniciarlas, una capacidad crucial para sistemas de alta disponibilidad 
+                    y entornos de producción.</p>
+                <p>Para mayor comodidad, CPython implementa esta interfaz a través del sysmódulo con una sys.remote_exec()función:</p>
+                <code>
+                    sys.remote_exec(pid, script_path)
+                </code>
+                <p>Esta función permite enviar código Python para su ejecución en un proceso de destino en el siguiente 
+                    punto de ejecución seguro. Sin embargo, los creadores de herramientas también pueden implementar 
+                    el protocolo directamente, como se describe en el PEP, que detalla los mecanismos subyacentes 
+                    utilizados para conectarse de forma segura a los procesos en ejecución.</p>
+                <p>A continuación se muestra un ejemplo simple que inspecciona los tipos de objetos en un proceso de Python en ejecución:</p>
+                <code>
+                    import os
+                    import sys
+                    import tempfile
+
+                    # Create a temporary script
+                    with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+                        script_path = f.name
+                        f.write(f"import my_debugger; my_debugger.connect({os.getpid()})")
+                    try:
+                        # Execute in process with PID 1234
+                        print("Behold! An offering:")
+                        sys.remote_exec(1234, script_path)
+                    finally:
+                        os.unlink(script_path)
+                </code>
+                <p>La interfaz de depuración ha sido cuidadosamente diseñada teniendo en cuenta la seguridad e incluye varios mecanismos para controlar el acceso:</p>
+                <ul>
+                    <li>APYTHON_DISABLE_REMOTE_DEBUGvariable de entorno.</li>
+                    <li>Una opción de línea de comandos.-X disable-remote-debug</li>
+                    <li>Una --without-remote-debugbandera de configuración para deshabilitar completamente la función en el momento de la compilación.</li>
+                </ul>
+                <p>Un detalle clave de implementación es que la interfaz se aprovecha del bucle de evaluación existente del 
+                    intérprete y de los puntos seguros, lo que garantiza cero sobrecarga durante la ejecución normal y al 
+                    mismo tiempo proporciona una forma confiable para que los procesos externos coordinen las operaciones de depuración.
+                </p>
+            </article>
+        </section>
+        <section class="main-section" id="Cambios_en_Phyton">
+            <header>Cambios en Phyton</header>
+            <article>
+                <ul>
+                    <li>La map()función integrada ahora incluye un indicador " strict"zip() opcional, que solo admite palabras clave, 
+                        para comprobar que todos los iterables tengan la misma longitud. (Contribuido por Wannes Boeykens en gh-119793 ).</li>
+                    <li>Ahora se detecta el uso incorrecto awaity las comprensiones asincrónicas incluso si el código se optimiza mediante 
+                        la -O opción de línea de comandos. Por ejemplo, ahora produce un . (Contribuido por Jelle Zijlstra en gh-121637 )
+                        .<code>python -O -c 'assert await 1'</code>SyntaxError</li>
+                    <li>Ahora se detectan las escrituras en <code>__debug__</code>incluso si el código se optimiza mediante la -Oopción de línea de 
+                        comandos. Por ejemplo, ahora produce un . (Contribuido por Irit Katriel en gh-122245 ).<code>python -O -c 'assert 
+                        (__debug__ := 1)'</code>SyntaxError</li>
+                </ul>
+            </article>
+        </section>
+        <section class="main-section" id="Modulos_Nuevos">
+            <header>Modulos Nuevos</header>
+            <article>
+                <ul>
+                    <li>annotationlib: Para introspeccionar anotaciones . VerPEP 749 para más detalles. (Contribución de Jelle Zijlstra en gh-119180 ).</li>
+                </ul>
+            </article>
+        </section>
+        <section class="main-section" id="Modulos_Mejorados">
+            <header>Modulos Mejorados</header>
+            <article>
+                <p>argparse</p>
+                <ul>
+                    <li>
+                        El valor predeterminado del nombre del programa refleja, por argparse.ArgumentParserahora, cómo se le 
+                        indicó al intérprete de Python que buscara el <code>__main__</code> código del módulo. 
+                        (Contribuido por Serhiy Storchaka y Alyssa Coghlan en gh-66436 ).
+                    </li>
+                    <li>
+                        Se introdujo el parámetro opcional suggests_on_errorargparse.ArgumentParser en , que permite 
+                        sugerencias para la elección de argumentos y nombres de subanalizadores si el usuario los 
+                        escribe incorrectamente. (Contribución de Savannah Ostrowski en gh-124456). 
+                    </li>
+                </ul>
+                <p>ast</p>
+                <ul>
+                    <li>
+                        Añadir ast.compare()para comparar dos AST. (Contribución de Batuhan Taskaya y Jeremy Hylton en gh-60191).
+                    </li>
+                    <li>
+                        Se agregó compatibilidad copy.replace()con nodos AST. (Contribución de Bénédikt Tran en gh-121141).
+                    </li>
+                    <li>
+                        Las cadenas de documentación ahora se eliminan de un AST optimizado en el nivel de optimización 2. (Contribuido por Irit Katriel en gh-123958 ).
+                    </li>
+                    <li>
+                        La <code>repr()</code> salida de los nodos AST ahora incluye más información. (Contribución de Tomas R en gh-116022).
+                    </li>
+                    <li>
+                        ast.parse() Al llamarse con un AST como entrada, ahora siempre verifica que el tipo de nodo raíz sea el adecuado. (Contribución de Irit Katriel en gh-130139).
+                    </li>
+                </ul>
+                <p>Calendario</p>
+                <ul>
+                    <li>De forma predeterminada, la fecha de hoy se resalta en color en la salida de texto calendarde la línea de comandos. 
+                        Esto se puede controlar mediante elPYTHON_COLORSVariable de entorno, así como las variables canónicas NO_COLOR y 
+                        FORCE_COLORde entorno. Véase también Control del color . (Contribución de Hugo van Kemenade en gh-128317 ).</li>
+                </ul>
+            </article>
+        </section>
+        <section class="main-section" id="Optimizaciones">
+            <header>Optimizaciones</header>
+            <article>
+                <p>asyncio</p>
+                <ul>
+                    <li>asyncioAhora utiliza la implementación de listas doblemente enlazadas para tareas nativas, lo que acelera 
+                        la ejecución un 10 % en las pruebas de rendimiento estándar de PyPerformance y reduce el uso de memoria. 
+                        (Contribución de Kumar Aditya en gh-107803 ).</li>
+                    <li>asynciotiene nuevas funciones de utilidad para realizar introspecciones e imprimir el gráfico de llamadas 
+                        del programa: asyncio.capture_call_graph()y asyncio.print_call_graph(). (Contribución de Yury Selivanov, 
+                        Pablo Galindo Salgado y Łukasz Langa en gh-91048 ).</li>
+                </ul>
+                <p>base64</p>
+                <ul>
+                    <li>Mejora el rendimiento de base64.b16decode()hasta diez veces y reduce el tiempo de importación de base64hasta 
+                        seis veces. (Contribución de Bénédikt Tran, Chris Markiewicz y Adam Turner en gh-118761 ).</li>
+                </ul>
+
+            </article>
+        </section>
+        <section class="main-section" id="Obsoleto">
+            <header>Obsoleto</header>
+            <article>
+                <ul>
+                    <li>argparse:
+                        <ul>
+                            <li>Pasar el argumento de palabra clave no documentado prefix_chars a add_argument_group()ya no es recomendable. 
+                                (Contribuido por Savannah Ostrowski en gh-125563 ).</li>
+                            <li>El argparse.FileTypeconvertidor de tipos está obsoleto. Cualquier acción relacionada con la gestión de 
+                                recursos debe realizarse posteriormente al análisis de los argumentos. (Contribución de Serhiy Storchaka 
+                                en gh-58032 ).</li>
+                        </ul>
+                    </li>
+                    <li>asyncio:
+                        <ul>
+                            <li>asyncio.iscoroutinefunction()Está obsoleto y se eliminará en Python 3.16; use inspect.iscoroutinefunction()en su lugar. (Contribuido por Jiahao Li y Kumar Aditya en gh-122875 ).</li>
+                            <li>asyncioEl sistema de políticas está obsoleto y se eliminará en Python 3.16. En particular, las siguientes clases y funciones están obsoletas:
+                                <ul>
+                                    <li>asyncio.AbstractEventLoopPolicy</li>
+                                    <li>asyncio.DefaultEventLoopPolicy</li>
+                                    <li>asyncio.WindowsSelectorEventLoopPolicy</li>
+                                    <li>asyncio.WindowsProactorEventLoopPolicy</li>
+                                    <li>asyncio.get_event_loop_policy()</li>
+                                    <li>asyncio.set_event_loop_policy()</li>
+                                    <li>asyncio.set_event_loop()</li>
+                                </ul>
+                            <p>Los usuarios deben usar asyncio.run()o asyncio.Runnercon loop_factory para utilizar la implementación del bucle de eventos deseada.</p>
+                            <p>Por ejemplo, para usar asyncio.SelectorEventLoopen Windows:</p>
+                            <code>
+                                import asyncio
+
+                                async def main():
+                                    ...
+
+                                asyncio.run(main(), loop_factory=asyncio.SelectorEventLoop)
+                            </code>
+                            <p>(Contribuido por Kumar Aditya en gh-127949 ).</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </article>
+        </section>
+        <section class="main-section" id="Eliminado">
+            <header>Eliminado</header>
+            <article>
+            </article>
+        </section>
+    </main>
     
 </body>
 </html>
