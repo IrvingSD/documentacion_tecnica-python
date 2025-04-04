@@ -3,6 +3,7 @@ html,body{
     background-color: #ffffff;
     font-family: 'Open Sans', Arial, sans-serif;
     line-height: 1.5;
+    overflow-x: hidden;
 }
 
 img{
@@ -57,6 +58,7 @@ section article{
 
 section li {
     margin: 15px 0px 0px 20px;
+    word-wrap: break-word;
   }
 
 #navbar ul{
@@ -116,26 +118,26 @@ li code:not(.exep){
 @media only screen and (max-width: 815px) {
     /* For mobile phones: */
     #navbar ul {
-      height: 207px;
+
+        height: 207px;
     }
   
     #navbar {
-      background-color: white;
-      position: absolute;
-      top: 0;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-      max-height: 275px;
-      border: none;
-      z-index: 1;
+        background-color: white;
+        position: absolute;
+        top: 0;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        max-height: 275px;
+        border: none;
+        z-index: 1;
     }
   
     #main-doc {
-      position: relative;
-      margin-left: 0px;
-      margin-top: 600px;
-      width: 100%;
+        position: relative;
+        margin-left: 0px;
+        margin-top: 600px;
     }
 
     #navbar a:hover{
@@ -147,5 +149,9 @@ li code:not(.exep){
         box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.086);
         border-radius: 5px;
     }
-  }
+
+    section li{
+        margin-left: -15px;
+    }
+}
   
