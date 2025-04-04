@@ -218,7 +218,7 @@ asyncio.run(main(), loop_factory=asyncio.SelectorEventLoop)
                             <li>ast.Num</li>
                             <li>ast.Str</li>
                         </ul>
-                        <p>Usar ast.Constanten su lugar. Como consecuencia de estas eliminaciones, los métodos <code>visit_Num</code>, <code>visit_Str</code>, <code>visit_Bytes</code> y definidos por el usuario en subclases personalizadas ya no se llamarán cuando la subclase visite un AST. Defina un método en su lugar </p>
+                        <p>Usar ast.Constanten su lugar. Como consecuencia de estas eliminaciones, los métodos <code>visit_Num</code>, <code>visit_Str</code>, <code>visit_Bytes</code> y definidos por el usuario en subclases personalizadas ya no se llamarán cuando la subclase visite un AST. Defina un método en su lugar <code>visit_NameConstantvisit_Ellipsisast.NodeVisitorNodeVisitorvisit_Constant</code></p>
                         <p>Además, elimine las siguientes propiedades obsoletas en ast.Constant, que estaban presentes por compatibilidad con las clases AST ahora eliminadas:</p>
                         <ul>
                             <li>ast.Constant.n</li>

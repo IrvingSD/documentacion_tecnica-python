@@ -101,7 +101,6 @@ li code:not(.exep){
     background-color: #1e1e1e; /* Mantiene el fondo oscuro */
     color: #d4d4d4;
     white-space: pre-wrap; 
-    overflow-x: auto;
 }
 
 #navbar a:hover{
