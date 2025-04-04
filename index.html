@@ -203,6 +203,67 @@ asyncio.run(main(), loop_factory=asyncio.SelectorEventLoop)
         <section class="main-section" id="Eliminado">
             <header>Eliminado</header>
             <article>
+                <p>argparse</p>
+                <ul>
+                    <li>Se eliminaron los parámetros "type" , "choices " y "metavar" de argparse.BooleanOptionalAction. Quedaron obsoletos desde la versión 3.12.</li>
+                    <li>Llamar add_argument_group()a un grupo de argumentos y llamar add_argument_group()a ``` add_mutually_exclusive_group()en un grupo mutuamente excluyente ahora genera excepciones. Esta anidación nunca se admitió, a menudo no funcionaba correctamente y se exponía accidentalmente mediante herencia. Esta funcionalidad está obsoleta desde Python 3.11. (Contribuido por Savannah Ostrowski en gh-127186 ).</li>
+                </ul>
+                <p>ast</p>
+                <ul>
+                    <li>Elimine las siguientes clases. Todas quedaron obsoletas desde Python 3.8 y han generado advertencias de obsolescencia desde Python 3.12:
+                        <ul>
+                            <li>ast.Bytes</li>
+                            <li>ast.Ellipsis</li>
+                            <li>ast.NameConstant</li>
+                            <li>ast.Num</li>
+                            <li>ast.Str</li>
+                        </ul>
+                        <p>Usar ast.Constanten su lugar. Como consecuencia de estas eliminaciones, los métodos <code>visit_Num</code>, <code>visit_Str</code>, <code>visit_Bytes</code> y definidos por el usuario en subclases personalizadas ya no se llamarán cuando la subclase visite un AST. Defina un método en su lugar <code>visit_NameConstantvisit_Ellipsisast.NodeVisitorNodeVisitorvisit_Constant</code></p>
+                        <p>Además, elimine las siguientes propiedades obsoletas en ast.Constant, que estaban presentes por compatibilidad con las clases AST ahora eliminadas:</p>
+                        <ul>
+                            <li>ast.Constant.n</li>
+                            <li>ast.Constant.s</li>
+                        </ul>
+                        <p>Usar ast.Constant.valueen su lugar. (Contribuido por Alex Waygood en gh-119562 ).</p>
+                    </li>
+                </ul>
+                <p>asyncio</p>
+                <ul>
+                    <li>Elimine las siguientes clases y funciones. Todas estaban obsoletas y emitían advertencias de obsolescencia desde Python 3.12:
+                        <ul>
+                            <li>asyncio.get_child_watcher()</li>
+                            <li>asyncio.set_child_watcher()</li>
+                            <li>asyncio.AbstractEventLoopPolicy.get_child_watcher()</li>
+                            <li>asyncio.AbstractEventLoopPolicy.set_child_watcher()</li>
+                            <li>asyncio.AbstractChildWatcher</li>
+                            <li>asyncio.FastChildWatcher</li>
+                            <li>asyncio.MultiLoopChildWatcher</li>
+                            <li>asyncio.PidfdChildWatcher</li>
+                            <li>asyncio.SafeChildWatcher</li>
+                            <li>asyncio.ThreadedChildWatcher</li>
+                        </ul>
+                        <p>(Contribuido por Kumar Aditya en gh-120804 .)</p>
+                    </li>
+                    <li>Se eliminó la creación implícita de un bucle de eventos por [nombre del bucle asyncio.get_event_loop()]. Ahora se genera [nombre del bucle] RuntimeErrorsi no hay ningún bucle de eventos actual. (Contribución de Kumar Aditya en gh-126353 ).
+                        <p>Hay algunos patrones que usan asyncio.get_event_loop(), la mayoría de ellos se pueden reemplazar con asyncio.run().</p>
+                        <p>Si está ejecutando una función asincrónica, simplemente utilice asyncio.run().</p>
+                        <p>Antes</p>
+                        <code class="exep">async def main():
+    ...
+
+
+loop = asyncio.get_event_loop()
+try:
+    loop.run_until_complete(main())
+finally:
+    loop.close()</code>
+                        <p>Después:</p>
+                        <code class="exep">async def main():
+    ...
+
+asyncio.run(main())</code>
+                    </li>
+                </ul>
             </article>
         </section>
     </main>
