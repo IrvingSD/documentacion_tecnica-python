@@ -136,6 +136,7 @@ li code:not(.exep){
       position: relative;
       margin-left: 0px;
       margin-top: 600px;
+      width: 100%;
     }
 
     #navbar a:hover{
