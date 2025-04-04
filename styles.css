@@ -100,6 +100,8 @@ li code:not(.exep){
     font-size: 0.95rem; /* Un poco más pequeño para mejor integración */
     background-color: #1e1e1e; /* Mantiene el fondo oscuro */
     color: #d4d4d4;
+    white-space: pre-wrap; 
+    overflow-x:
 }
 
 #navbar a:hover{
